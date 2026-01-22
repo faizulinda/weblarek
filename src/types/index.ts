@@ -25,8 +25,17 @@ export type TGetProducts = {
     items: IProduct[];
 }
 
-export type TPostCustomers = {
+export type TPostCustomer = {
     id?: string;
     total?: number;
     error?: string;
+}
+
+export type TCustomer = {
+    email: string;
+    address: string;
+    phone: string;
+    payment: string;
+    items: string[];
+    total: number;
 }

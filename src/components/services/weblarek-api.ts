@@ -1,20 +1,17 @@
-import { TGetProducts, TPostCustomers } from "../../types";
-import { API_URL } from "../../utils/constants";
-import { Api } from "../base/Api";
+import { IApi, TCustomer, TGetProducts, TPostCustomer } from "../../types";
 
 export class WebLarekApi {
-  private api: Api;
-  private API_ORIGIN: string = API_URL;
+  private api: IApi;
 
-  constructor() {
-    this.api = new Api(this.API_ORIGIN);
+  constructor(api: IApi) {
+    this.api = api;
   }
 
   getProducts(): Promise<TGetProducts> {
     return this.api.get("/product/");
   }
 
-  postCustomer(data: object): Promise<TPostCustomers> {
+  postCustomer(data: TCustomer): Promise<TPostCustomer> {
     return this.api.post("/order/", data);
   }
 }

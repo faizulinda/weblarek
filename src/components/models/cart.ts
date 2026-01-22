@@ -10,7 +10,7 @@ export class Cart {
     this.products = [];
   }
 
-  getCartProducts(): IProduct[] | null {
+  getCartProducts(): IProduct[] {
     return this.products;
   }
 

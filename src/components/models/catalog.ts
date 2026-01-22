@@ -7,8 +7,8 @@ export class Catalog {
   private products: IProduct[];
   private selectedProduct: IProduct | null = null;
 
-  constructor(products: IProduct[] = []) {
-    this.products = products;
+  constructor() {
+    this.products = [];
   }
 
   setProducts(products: IProduct[]) {
