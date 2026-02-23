@@ -3,6 +3,7 @@
  */
 
 import { ICustomer } from "../../types";
+import { IEvents } from "../base/Events";
 
 export class Customer {
   private payment: ICustomer["payment"] = "";
@@ -10,22 +11,26 @@ export class Customer {
   private email: string | null = null;
   private phone: string | null = null;
 
-  constructor() {}
+  constructor(private events: IEvents) {}
 
   setPayment(payment: ICustomer["payment"]): void {
     this.payment = payment;
+    this.events.emit('payment:changed');
   }
 
   setAddress(address: string | null): void {
     this.address = address;
+    this.events.emit('address:changed');
   }
 
   setEmail(email: string | null): void {
     this.email = email;
+    this.events.emit('email:changed');
   }
 
   setPhone(phone: string | null): void {
     this.phone = phone;
+    this.events.emit('phone:changed');
   }
 
   getData(): ICustomer {
@@ -62,7 +67,7 @@ export class Customer {
   }
 }
 
-type CustomerErrors = {
+export type CustomerErrors = {
   payment?: string;
   address?: string;
   email?: string;

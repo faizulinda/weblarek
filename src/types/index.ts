@@ -31,11 +31,15 @@ export type TPostCustomer = {
     error?: string;
 }
 
-export type TCustomer = {
+export type TCustomerApi = {
     email: string;
     address: string;
     phone: string;
     payment: string;
     items: string[];
     total: number;
+}
+
+export interface IActions {
+  onClick?: () => void;
 }

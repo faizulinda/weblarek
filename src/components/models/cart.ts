@@ -1,4 +1,5 @@
 import { IProduct } from "../../types";
+import { IEvents } from "../base/Events";
 
 /**
  *
@@ -6,7 +7,7 @@ import { IProduct } from "../../types";
 export class Cart {
   private products: IProduct[];
 
-  constructor() {
+  constructor(private events: IEvents) {
     this.products = [];
   }
 
@@ -16,10 +17,12 @@ export class Cart {
 
   addToCart(product: IProduct) {
     this.products.push(product);
+    this.events.emit(`cart:added`, product)
   }
 
   removeFromCart(product: IProduct) {
     this.products = this.products.filter((pro) => pro.id !== product.id);
+    this.events.emit(`cart:removed`, product)
   }
 
   clearCart() {
