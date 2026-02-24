@@ -26,7 +26,7 @@ export class ModalContainer extends Component<IModalContainer> {
     );
 
     if (actions?.onClick) {
-      this.closeButton.addEventListener("click", actions.onClick);
+      this.closeButton.addEventListener("click", () => this.close());
 
       this.container.addEventListener("click", (e) => {
         if (e.target === e.currentTarget) {

@@ -1,15 +1,16 @@
 import { categoryMap } from "../../../utils/constants";
 import { ensureElement } from "../../../utils/utils";
-import { Card, ICard } from "./Card";
+import { Card } from "./Card";
 
-export interface ICardWhithImage extends ICard {
+interface ICardWhithImage {
+  title: string;
+  price: number | null;
   image: string;
   category: string;
 }
 
-export abstract class CardWithImage<
-  ICardWhithImage,
-> extends Card<ICardWhithImage> {
+export abstract class CardWithImage<T extends
+  ICardWhithImage> extends Card<T> {
   protected imageElement: HTMLImageElement;
   protected categoryElement: HTMLElement;
 

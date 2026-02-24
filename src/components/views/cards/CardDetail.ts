@@ -1,8 +1,12 @@
 import { IActions } from "../../../types";
 import { ensureElement } from "../../../utils/utils";
-import { CardWithImage, ICardWhithImage } from "./CardWithImage";
+import { CardWithImage } from "./CardWithImage";
 
-interface ICardDetail extends ICardWhithImage {
+interface ICardDetail{
+  title: string;
+  price: number | null;
+  image: string;
+  category: string;
   description: string;
   buttonText: string;
 }

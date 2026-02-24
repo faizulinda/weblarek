@@ -43,3 +43,13 @@ export type TCustomerApi = {
 export interface IActions {
   onClick?: () => void;
 }
+
+export interface IOrderActions {
+  onChooseCard?: () => void;
+  onChooseCash?: () => void;
+  onAddressInput?: (value: string) => void;
+  onClickFurther?: () => void;
+  onEmailInput?: (value: string) => void;
+  onPhoneInput?: (value: string) => void;
+  onClickPay?: () => void;
+}

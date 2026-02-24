@@ -1,10 +1,12 @@
-import { ensureElement } from "../../../../utils/utils";
-import { CustomerErrors } from "../../../models/customer";
-import { Form, IForm, IOrderActions } from "./Form";
+import { IOrderActions } from "../../../types";
+import { ensureElement } from "../../../utils/utils";
+import { Form } from "./Form";
 
-interface IFormContacts extends IForm {
+interface IFormContacts{
+  textError: string;
   email: string;
   phone: string;
+  isValid: boolean;
 }
 
 export class FormContacts extends Form<IFormContacts> {
@@ -51,20 +53,5 @@ export class FormContacts extends Form<IFormContacts> {
 
   set phone(value: string | null) {
     this.phoneInput.value = value ?? "";
-  }
-
-  set textError(customerErrors: CustomerErrors) {
-    this.submitButton.disabled = true;
-
-    if (customerErrors.email) {
-      this.errorsElement.textContent = customerErrors.email;
-    } else {
-      if (customerErrors.phone) {
-        this.errorsElement.textContent = customerErrors.phone;
-      } else {
-        this.errorsElement.textContent = "";
-        this.submitButton.disabled = false;
-      }
-    }
   }
 }

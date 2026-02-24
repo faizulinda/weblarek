@@ -17,16 +17,17 @@ export class Cart {
 
   addToCart(product: IProduct) {
     this.products.push(product);
-    this.events.emit(`cart:added`, product)
+    this.events.emit(`cart:changed`);
   }
 
   removeFromCart(product: IProduct) {
     this.products = this.products.filter((pro) => pro.id !== product.id);
-    this.events.emit(`cart:removed`, product)
+    this.events.emit(`cart:changed`);
   }
 
   clearCart() {
     this.products = [];
+    this.events.emit(`cart:changed`);
   }
 
   getTotalPrice(): number {

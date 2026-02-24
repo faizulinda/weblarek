@@ -1,8 +1,10 @@
 import { IActions } from "../../../types";
 import { ensureElement } from "../../../utils/utils";
-import { ICard, Card } from "./Card";
+import { Card } from "./Card";
 
-interface ICardBasket extends ICard {
+interface ICardBasket {
+  title: string;
+  price: number | null;
   itemIndex: number;
 }
 

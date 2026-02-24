@@ -1,7 +1,14 @@
 import { IActions } from "../../../types";
-import { CardWithImage, ICardWhithImage } from "./CardWithImage";
+import { CardWithImage } from "./CardWithImage";
 
-export class CardCatalog extends CardWithImage<ICardWhithImage> {
+interface ICardCatalog {
+  title: string;
+  price: number | null;
+  image: string;
+  category: string; 
+}
+
+export class CardCatalog extends CardWithImage<ICardCatalog> {
   constructor(container: HTMLElement, actions?: IActions) {
     super(container);
 

@@ -1,12 +1,12 @@
 import { ensureElement, formatSynapses } from "../../../utils/utils";
 import { Component } from "../../base/Component";
 
-export interface ICard {
+interface ICard {
   title: string;
   price: number | null;
 }
 
-export abstract class Card<ICard> extends Component<ICard> {
+export abstract class Card<T extends ICard> extends Component<T> {
   protected titleElement: HTMLElement;
   protected priceElement: HTMLElement;
 

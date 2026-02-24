@@ -1,7 +1,3 @@
-/**
- *
- */
-
 import { ICustomer } from "../../types";
 import { IEvents } from "../base/Events";
 
@@ -15,22 +11,22 @@ export class Customer {
 
   setPayment(payment: ICustomer["payment"]): void {
     this.payment = payment;
-    this.events.emit('payment:changed');
+    this.events.emit('customer:changed');
   }
 
   setAddress(address: string | null): void {
     this.address = address;
-    this.events.emit('address:changed');
+    this.events.emit('customer:changed');
   }
 
   setEmail(email: string | null): void {
     this.email = email;
-    this.events.emit('email:changed');
+    this.events.emit('customer:changed');
   }
 
   setPhone(phone: string | null): void {
     this.phone = phone;
-    this.events.emit('phone:changed');
+    this.events.emit('customer:changed');
   }
 
   getData(): ICustomer {
@@ -67,9 +63,4 @@ export class Customer {
   }
 }
 
-export type CustomerErrors = {
-  payment?: string;
-  address?: string;
-  email?: string;
-  phone?: string;
-};
+export type CustomerErrors = Partial<Record<keyof ICustomer, string>>;

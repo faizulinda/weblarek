@@ -1,10 +1,12 @@
-import { ensureElement } from "../../../../utils/utils";
-import { Form, IForm, IOrderActions } from "./Form";
-import { CustomerErrors } from "../../../models/customer";
+import { IOrderActions } from "../../../types";
+import { ensureElement } from "../../../utils/utils";
+import { Form } from "./Form";
 
-interface IFormOrder extends IForm {
+interface IFormOrder {
+  textError: string;
   payment: string | null;
   address: string | null;
+  isValid: boolean;
 }
 
 export class FormOrder extends Form<IFormOrder> {
@@ -51,37 +53,11 @@ export class FormOrder extends Form<IFormOrder> {
   }
 
   set payment(value: string | null) {
-    if (value === "card") {
-      this.cardButton.classList.add("button_alt-active");
-      this.cashButton.classList.remove("button_alt-active");
-    }
-    if (value === "cash") {
-      this.cardButton.classList.remove("button_alt-active");
-      this.cashButton.classList.add("button_alt-active");
-    }
-
-    if (value === "") {
-      this.cardButton.classList.remove("button_alt-active");
-      this.cashButton.classList.remove("button_alt-active");
-    }
+    this.cardButton.classList.toggle('button_alt-active', value === 'card');
+    this.cashButton.classList.toggle('button_alt-active', value === 'cash')
   }
 
   set address(value: string | null) {
     this.addressInput.value = value ?? "";
-  }
-
-  set textError(customerErrors: CustomerErrors) {
-    this.submitButton.disabled = true;
-
-    if (customerErrors.payment) {
-      this.errorsElement.textContent = customerErrors.payment ?? "";
-    } else {
-      if (customerErrors.address) {
-        this.errorsElement.textContent = customerErrors.address;
-      } else {
-        this.errorsElement.textContent = "";
-        this.submitButton.disabled = false;
-      }
-    }
   }
 }

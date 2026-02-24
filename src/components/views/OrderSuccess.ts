@@ -1,6 +1,6 @@
-import { IActions } from "../../../types";
-import { ensureElement, formatSynapses } from "../../../utils/utils";
-import { Component } from "../../base/Component";
+import { IActions } from "../../types";
+import { ensureElement, formatSynapses } from "../../utils/utils";
+import { Component } from "../base/Component";
 
 interface IOrderSuccess {
   successDescription: string;

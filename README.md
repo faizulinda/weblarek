@@ -437,7 +437,6 @@ WebLarekApi вызывает методы Api (в первую очередь ge
 ### События
 
 #### событие `catalog:changed`
-* Purpose: отобразить каталог продуктов после загрузки
 * Producer: Catalog (Model) — setProducts()
 * Trigger: после успешной записи товаров в модель catalog.products
 * Consumers: main.ts (Presenter)
@@ -446,8 +445,7 @@ WebLarekApi вызывает методы Api (в первую очередь ge
     - создаёт карточки CardCatalog
     - отдаёт массив элементов в gallery.render({ catalog: itemCards })
 
-#### событие `card:select`
-* Purpose: записать информациб о выбранной карточке продукта
+#### событие `card-catalog:click`
 * Producer: CardCatalog (через action onClick)
 * Trigger: после клика пользователя на карточку в каталоге продуктов cardCatalog.container;
 * Consumers: main.ts (Presenter)
@@ -455,7 +453,6 @@ WebLarekApi вызывает методы Api (в первую очередь ge
     - Presenter вызывает метод записи выбранного продукта catalog.setSelectedProduct(product)
 
 #### событие `card:selected`
-* Purpose: отобразить детальную информацию о продукте в модальном окне
 * Producer: Catalog (Model) - setSelectedProduct()
 * Trigger: сохранение selectedProduct в модель данных;
 * Consumers: main.ts (Presenter)
@@ -466,49 +463,22 @@ WebLarekApi вызывает методы Api (в первую очередь ge
     - вызывает отображение модального окна modal.open
 
 #### событие `modal:close`
-* Purpose: закрыть модальное окно
 * Producer: ModalContainer (через action onClick) 
 * Trigger: пользователь нажимает на кнопку `.modal__close`
 * Consumers: main.ts (Presenter)
 * Effects:
     - Presenter вызывает метод закрытия модального окна modal.close
 
-#### событие `cart:add`
-* Purpose: добавить продукт в корзину
-* Producer: CardDetail (через action onClick)
-* Trigger: пользователь нажимает на кнопку `.card__button`, когда она в состоянии "Купить"
+#### событие `cart:changed`
+* Producer: Cart (Model) - addToCart() / removeFromCart();
+* Trigger: вызван метод cart.addToCart(product) / cart.removeFromCart();
 * Consumers: main.ts (Presenter)
 * Effects:
-    - Presenter вызывает метод записи product в модель cart
-
-#### событие `cart:added`
-* Purpose: отобразить добавление продукта в корзину в детальной карточке продукта, а также добавить в счетчик продуктов в корзине в header;
-* Producer: Cart (Model) - addToCart
-* Trigger: вызван метод cart.addToCart(product);
-* Consumers: main.ts (Presenter)
-* Effects:
-    - Presenter перерисовывает детальную карточку продукта с учетом того, что продукт был выбран
+    - Presenter перерисовывает детальную карточку продукта
     - перерисовывает счетчик количества продуктов в корзине в header
+    - перерисовывает корзину
 
-#### событие `cart:remove`
-* Purpose: удалить продукт из корзины 
-* Producer: CardDetail (через action onClick)
-* Trigger: пользователь нажимает на кнопку `.card__button`, когда она в состоянии "Удалить из корзины"
-* Consumers: main.ts (Presenter)
-* Effects:
-    - Presenter вызывает метод удаления product из модель cart
-
-#### событие `cart:removed`
-* Purpose: отобразить удаление продукта из корзину в детальной карточке продукта, а также из счетчика продуктов в корзине в header
-* Producer: Cart (Model) - removeFromCart()
-* Trigger: вызван метод cart.removeFromCart(product)
-* Consumers: main.ts (Presenter)
-* Effects:
-    - Presenter перерисовывает детальную карточку продукта с учетом того, что продукт был выбран
-    - перерисовывает счетчик количества продуктов в корзине в header
-
-#### событие `basket:open`
-* Purpose: открыть корзину в модальном окне
+#### событие `header-basket:click`
 * Producer: Header (через action onClick)  
 * Trigger: пользователь нажимает на кнопку `.header__basket`
 * Consumers: main.ts (Presenter)
@@ -517,8 +487,7 @@ WebLarekApi вызывает методы Api (в первую очередь ge
     - рендерит карточку корзины
     - выводит в модальное окно контет корзины
 
-#### `order:place` 
-* Purpose: перейти к оформлению заказа
+#### `basket-button:click` 
 * Producer: Basket (через action onClick)
 * Trigger: пользователь нажал на кнопку "Оформить" в корзине
 * Consumers: main.ts (Presenter)
@@ -529,7 +498,6 @@ WebLarekApi вызывает методы Api (в первую очередь ge
     - выводит карточку в модальное окно
 
 #### событие `order:pay`
-* Purpose: отправить заказ на сервер (POST /order/)
 * Producer: FormContacts (через action onClickPay)
 * Trigger: пользователь нажимает кнопку “Оплатить”
 * Consumers: main.ts (Presenter)
@@ -545,26 +513,7 @@ WebLarekApi вызывает методы Api (в первую очередь ge
         - очищает корзину/клиента и обновляет счетчик (contentClear())
     - если ошибка: логирует ошибку в консоль
 
-#### событие `phone:changed`
-* Purpose: пере-валидировать форму контактов и показать ошибки
-* Producer: Customer (model) setPhone()
-* Trigger: Изменение телефона в данных покупателя
-* Consumers: main.ts (Presenter)
-* Effects: 
-    - пересчитывает ошибки customer.validation()
-    - прокидывает их во View: formContacts.textError
-
-#### событие `email:changed`
-* Purpose: пере-валидировать форму контактов и показать ошибки
-* Producer: Customer (model) setEmail()
-* Trigger: изменение email в данных покупателя
-* Consumers: main.ts (Presenter)
-* Effects:
-    - пересчитывает ошибки customer.validation()
-    - обновляет ошибки во View: formContacts.textError
-
 #### событие `contact:email`
-* Purpose: передать введённый email из формы в модель Customer
 * Producer: FormContacts (через action onEmailInput)
 * Trigger: пользователь вводит значение в поле input[name="email"]
 * Consumers: main.ts (Presenter)
@@ -572,16 +521,13 @@ WebLarekApi вызывает методы Api (в первую очередь ge
     - вызывает запись email в данные customer.setEmail(email)
 
 #### событие `contact:phone`
-* Purpose: передать введённый телефон из формы в модель Customer
 * Producer: FormContacts (через action onPhoneInput)
 * Trigger: пользователь вводит значение в поле input[name="phone"]
 * Consumers:  main.ts (Presenter)
 * Effects:
     - вызывает customer.setPhone(phone)
 
-
-#### событие `order:submit`
-* Purpose: перейти со страницы заказа (адрес/оплата) на форму контактов
+#### событие `form-order-button:click`
 * Producer: FormOrder (через action onClickFurther)
 * Trigger: пользователь нажимает кнопку “Далее” в форме заказа
 * Consumers: main.ts (Presenter)
@@ -591,37 +537,22 @@ WebLarekApi вызывает методы Api (в первую очередь ge
         - подставляет formContacts.email/phone из customer.getData()
         - кладёт форму в модальное окно: modal.content = formContacts.render()
 
-#### событие `address:changed`
-* Purpose: пере-валидировать форму заказа и показать ошибки
-* Producer: Customre (model) setAddress()
-* Trigger: изменение адреса в данных покупателя
-* Consumers: main.ts (Presenter)
-* Effects:
-    - пересчитывает ошибки customer.validation()
-    - обновляет ошибки во View: formOrder.textError
-
-#### событие `customer:address`
-* Purpose: передать введённый адрес доставки из формы в модель Customer
+#### событие `customer-address:input`
 * Producer: FormOrder (через action onAddressInput)
 * Trigger: пользователь вводит значение в поле input[name="address"]
 * Consumers: main.ts (Presenter)
 * Effects:
     - вызывает запись адреса в модель данных customer.setAddress(address)
 
-#### событие `payment:changed`
-* Purpose:  перерисовать форму заказа после смены способа оплаты
-* Producer: Customer (model) setPayment()
-* Trigger: изменение payment в данных покупателя
+#### событие `customer:changed`
+* Producer: Customer (model) setPayment() /serAddress() / serEmail() / setPhone()
+* Trigger: изменение данных в customer
 * Consumers: main.ts (Presenter)
 * Effects:
-    - вызывает отрисовку формы заказа formOrderRender()
-    - внутри formOrderRender():
-        - проставляет formOrder.payment и formOrder.address из customer.getData()
-        - проставляет formOrder.textError = customer.validation()
-        - кладёт форму в модальное окно: modal.content = formOrder.render()
+    - вызывает отрисовку формы заказа FormOrder
+    - вызывает отрисовку формы контактнов FormContact
 
 #### событие `payment:card`
-* Purpose:  выбрать способ оплаты “онлайн”
 * Producer: FormOrder (через action onChooseCard)
 * Trigger: пользователь нажимает кнопку button[name="card"] (Онлайн)
 * Consumers: main.ts (Presenter)
@@ -629,12 +560,34 @@ WebLarekApi вызывает методы Api (в первую очередь ge
     - вызывает сохранение информации о выбранном способе оплаты customer.setPayment('card')
 
 #### событие `payment:cash`
-* Purpose: выбрать способ оплаты “при получении”
 * Producer: FormOrder (через action onChooseCash)
 * Trigger: пользователь нажимает кнопку button[name="cash"] (При получении)
 * Consumers: main.ts (Presenter)
 * Effects:
     - вызывает сохранение информации о выбранном способе оплаты customer.setPayment('cash')
+
+
+#### событие card-detail:click
+* Producer: CardDetail (через action onClick)
+* Trigger: пользователь нажимает на кнопку .card__button в детальной карточке товара
+* Consumers: main.ts (Presenter)
+* Effects:
+    - получает выбранный товар через catalog.getSelectedProduct()
+    - проверяет наличие товара в корзине cart.hasProduct(id)
+    - если товар уже в корзине — вызывает cart.removeFromCart(product)
+    - если товара нет в корзине — вызывает cart.addToCart(product)
+    - обновляет отображение детальной карточки cardDetailViewRender()
+
+#### событие card-basket:click
+* Producer: CardBasket (через action onClick)
+* Trigger: пользователь нажимает кнопку удаления товара в карточке корзины
+* Consumers: main.ts (Presenter)
+* Effects:
+    - вызывает удаление товара из корзины cart.removeFromCart(product)
+    - инициирует событие cart:changed, что приводит к:
+    - перерисовке корзины
+    - обновлению счетчика товаров в Header
+    - обновлению детальной карточки
 
 //draft
 #### событие ``
